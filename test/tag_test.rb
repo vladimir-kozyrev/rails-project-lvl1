@@ -3,10 +3,6 @@
 require "test_helper"
 
 class HexletCodeTest < Minitest::Test
-  def test_that_it_has_a_version_number
-    refute_nil ::HexletCode::VERSION
-  end
-
   def test_tag_build_without_args
     assert_equal HexletCode::Tag.build("br"), "<br>"
   end
