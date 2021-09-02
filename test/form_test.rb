@@ -5,7 +5,7 @@ require "test_helper"
 class HexletCodeTest < Minitest::Test
   def setup
     user_class = Struct.new(:name, :job, :gender, :foo, :bar, keyword_init: true)
-    @user = user_class.new name: "rob", job: "hexlet", gender: "m", foo: "", bar: nil
+    @user = user_class.new name: "rob", job: "hexlet", gender: "m"
   end
 
   def shorten(text)
@@ -32,37 +32,33 @@ class HexletCodeTest < Minitest::Test
     expected_result = <<-RESULT
       <form action="#" method="post">
         <label for="name">Name</label>
-        <input type="text" value="rob" name="name">
+        <input type="text" value="rob" name="name" class="woo">
       </form>
     RESULT
     assert_equal shorten(expected_result),
-                 HexletCode.form_for(@user) { |f| f.input :name }
+                 HexletCode.form_for(@user) { |f| f.input :name, class: "woo" }
   end
 
   def test_form_for_raises_if_input_is_not_set
-    assert_raises RuntimeError, "The user does not have such method" do
-      HexletCode.form_for(@user) { |f| f.input :dog }
-    end
-  end
-
-  def test_form_for_raises_if_input_is_empty_or_nil
-    assert_raises RuntimeError, "The field value for this user is not set" do
-      HexletCode.form_for(@user) { |f| f.input :foo }
-    end
-    assert_raises RuntimeError, "The field value for this user is not set" do
-      HexletCode.form_for(@user) { |f| f.input :bar }
-    end
+    expected_result = <<-RESULT
+      <form action="#" method="post">
+        <label for="dog">Dog</label>
+        <input type="text" name="dog">
+      </form>
+    RESULT
+    assert_equal shorten(expected_result),
+                 HexletCode.form_for(@user) { |f| f.input :dog }
   end
 
   def test_form_for_generates_form_with_text_input
     expected_result = <<-RESULT
       <form action="#" method="post">
         <label for="job">Job</label>
-        <textarea cols="20" rows="40" name="job">hexlet</textarea>
+        <textarea cols="30" rows="40" name="job">hexlet</textarea>
       </form>
     RESULT
     assert_equal shorten(expected_result),
-                 HexletCode.form_for(@user) { |f| f.input :job, as: :text }
+                 HexletCode.form_for(@user) { |f| f.input :job, as: :text, rows: 40, cols: 30 }
   end
 
   # rubocop:disable Metrics/MethodLength

@@ -20,11 +20,11 @@ module HexletCode
       @form += "\n<label for=\"#{field}\">#{field.capitalize}</label>"
       case kwargs[:as]
       when nil
-        generate_input(field)
+        generate_input(field, klass: kwargs[:class])
       when :text
-        generate_textarea(field)
+        generate_textarea(field, rows: kwargs[:rows], cols: kwargs[:cols], klass: kwargs[:class])
       when :select
-        generate_select(field, kwargs[:collection])
+        generate_select(field, collection: kwargs[:collection], klass: kwargs[:class])
       end
     end
 
@@ -42,41 +42,51 @@ module HexletCode
 
     def form_beginning
       action = @url.nil? ? "#" : @url
-      form = "<form action=\"#{action}\" method=\"post\">"
-      form = form.split("\n").map(&:strip)
-      form.join("\n")
+      "<form action=\"#{action}\" method=\"post\">"
     end
 
-    def generate_input(field)
+    def generate_input(field, klass: nil)
       value = get_field_value(field)
-      @form += "\n<input type=\"text\" value=\"#{value}\" name=\"#{field}\">"
+      @form += "\n<input"
+      @form += html_attribute("type", "text")
+      @form += html_attribute("value", value)
+      @form += html_attribute("name", field)
+      @form += html_attribute("class", klass)
+      @form += ">"
     end
 
-    def generate_textarea(field)
+    def generate_textarea(field, rows: 20, cols: 40, klass: nil)
       value = get_field_value(field)
-      @form += "\n<textarea cols=\"20\" rows=\"40\" name=\"#{field}\">#{value}</textarea>"
+      @form += "\n<textarea"
+      @form += html_attribute("cols", cols)
+      @form += html_attribute("rows", rows)
+      @form += html_attribute("name", field)
+      @form += html_attribute("class", klass)
+      @form += ">#{value}</textarea>"
     end
 
-    def generate_select(field, collection)
+    def generate_select(field, collection: nil, klass: nil)
       raise "You must specify a collection for 'select' input" if collection.nil? ||
                                                                   !collection.instance_of?(Array)
 
       value = get_field_value(field)
-      result = collection.inject("\n<select name=\"gender\">") do |memo, gender|
+      @form += collection.inject("\n<select name=\"gender\">") do |memo, gender|
         memo += "\n<option value=\"#{gender}\""
         memo += " selected" if value == gender
         memo + ">#{gender}</option>"
       end
-      @form += format("%<result>s%<end_of_field>s", result: result, end_of_field: "\n</select>")
+      @form += html_attribute("class", klass)
+      @form += "\n</select>"
+    end
+
+    def html_attribute(attr_name, attr_value)
+      return " #{attr_name}=\"#{attr_value}\"" if attr_value.instance_of? Integer
+
+      attr_value.nil? || attr_value.empty? ? "" : " #{attr_name}=\"#{attr_value}\""
     end
 
     def get_field_value(field)
-      raise "The user does not have such method" unless @user.methods.include? field
-
-      value = @user.send field
-      raise "The field value for this user is not set" if value.nil? || value.empty?
-
-      value
+      @user.methods.include?(field) ? @user.send(field) : ""
     end
   end
 end
