@@ -4,14 +4,17 @@ AllCops:
 
 Style/StringLiterals:
   Enabled: true
-  EnforcedStyle: double_quotes
+  EnforcedStyle: single_quotes
 
 Style/StringLiteralsInInterpolation:
   Enabled: true
-  EnforcedStyle: double_quotes
+  EnforcedStyle: single_quotes
 
 Style/Semicolon:
   AllowAsExpressionSeparator: true
+
+Metrics/MethodLength:
+  Max: 12
 
 Layout/LineLength:
   Max: 120
