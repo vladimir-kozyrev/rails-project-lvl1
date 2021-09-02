@@ -17,7 +17,8 @@ module HexletCode
     end
 
     def input(field, **kwargs)
-      @form += "\n<label for='#{field}'>#{field.capitalize}</label>"
+      tag = HexletCode::Tag.build('label', for: field) { field.to_s.capitalize }
+      @form += "\n#{tag}"
       case kwargs[:as]
       when nil
         generate_input(field, klass: kwargs[:class])
@@ -31,7 +32,8 @@ module HexletCode
     def submit(value = 'Save')
       raise 'The argument should be a string' unless value.instance_of? String
 
-      @form += "\n<input type='submit' value='#{value}' name='commit'>"
+      tag = HexletCode::Tag.build('input', type: 'submit', value: value, name: 'commit')
+      @form += "\n#{tag}"
     end
 
     def finalize_form
@@ -42,47 +44,35 @@ module HexletCode
 
     def form_beginning
       action = @url.nil? ? '#' : @url
-      "<form action='#{action}' method='post'>"
+      HexletCode::Tag.build('form', action: action, method: 'post')
     end
 
     def generate_input(field, klass: nil)
       value = get_field_value(field)
-      @form += "\n<input"
-      @form += html_attribute('type', 'text')
-      @form += html_attribute('value', value)
-      @form += html_attribute('name', field)
-      @form += html_attribute('class', klass)
-      @form += '>'
+      tag = HexletCode::Tag.build('input', type: 'text', value: value, name: field, class: klass)
+      @form += "\n#{tag}"
     end
 
     def generate_textarea(field, rows: 20, cols: 40, klass: nil)
       value = get_field_value(field)
-      @form += "\n<textarea"
-      @form += html_attribute('cols', cols)
-      @form += html_attribute('rows', rows)
-      @form += html_attribute('name', field)
-      @form += html_attribute('class', klass)
-      @form += ">#{value}</textarea>"
+      tag = HexletCode::Tag.build(
+        'textarea', cols: cols, rows: rows, name: field, class: klass
+      ) { value }
+      @form += "\n#{tag}"
     end
 
     def generate_select(field, collection: nil, klass: nil)
       raise 'You must specify a collection for "select" input' if collection.nil? ||
                                                                   !collection.instance_of?(Array)
 
-      value = get_field_value(field)
-      @form += collection.inject("\n<select name='gender'>") do |memo, gender|
-        memo += "\n<option value='#{gender}'"
-        memo += ' selected' if value == gender
-        memo + ">#{gender}</option>"
+      tag = HexletCode::Tag.build('select', name: field, class: klass) do
+        nested_tags = collection.map do |gender|
+          option_tag = HexletCode::Tag.build('option', value: gender, class: klass) { gender }
+          "\n#{option_tag}"
+        end
+        "#{nested_tags.join}\n"
       end
-      @form += html_attribute('class', klass)
-      @form += "\n</select>"
-    end
-
-    def html_attribute(attr_name, attr_value)
-      return " #{attr_name}='#{attr_value}'" if attr_value.instance_of? Integer
-
-      attr_value.nil? || attr_value.empty? ? '' : " #{attr_name}='#{attr_value}'"
+      @form += "\n#{tag}"
     end
 
     def get_field_value(field)

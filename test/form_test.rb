@@ -66,7 +66,7 @@ class HexletCodeTest < Minitest::Test
       <form action='#' method='post'>
         <label for='gender'>Gender</label>
         <select name='gender'>
-          <option value='m' selected>m</option>
+          <option value='m'>m</option>
           <option value='f'>f</option>
         </select>
       </form>
