@@ -7,8 +7,10 @@ module HexletCode
       raise 'You must provide a tag name' if tag_name.nil?
 
       result = "<#{tag_name}"
-      tag_args = kwargs.map { |key, value| "#{key}='#{value}'" }
-      result += format(' %s', tag_args.join(' ')) unless tag_args.empty?
+      unless kwargs.empty?
+        tag_args = kwargs.map { |key, value| "#{key}='#{value}'" }
+        result += format(' %s', tag_args.join(' '))
+      end
       result += '>'
       result += yield + "</#{tag_name}>" if block_given?
       result

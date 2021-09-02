@@ -83,8 +83,11 @@ class HexletCodeTest < Minitest::Test
         <input type='submit' value='Save' name='commit'>
       </form>
     RESULT
-    assert_equal shorten(expected_result),
-                 HexletCode.form_for(@user) { |f| f.input :name; f.submit }
+    actual_result = HexletCode.form_for(@user) do |f|
+      f.input :name
+      f.submit
+    end
+    assert_equal shorten(expected_result), actual_result
   end
 
   def test_form_for_generates_submit_with_different_value
@@ -95,7 +98,10 @@ class HexletCodeTest < Minitest::Test
         <input type='submit' value='Do it' name='commit'>
       </form>
     RESULT
-    assert_equal shorten(expected_result),
-                 HexletCode.form_for(@user) { |f| f.input :name; f.submit 'Do it' }
+    actual_result = HexletCode.form_for(@user) do |f|
+      f.input :name
+      f.submit 'Do it'
+    end
+    assert_equal shorten(expected_result), actual_result
   end
 end
