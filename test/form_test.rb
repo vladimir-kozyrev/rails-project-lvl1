@@ -31,6 +31,7 @@ class HexletCodeTest < Minitest::Test
   def test_form_for_generates_form_with_input
     expected_result = <<-RESULT
       <form action="#" method="post">
+        <label for="name">Name</label>
         <input type="text" value="rob" name="name">
       </form>
     RESULT
@@ -56,6 +57,7 @@ class HexletCodeTest < Minitest::Test
   def test_form_for_generates_form_with_text_input
     expected_result = <<-RESULT
       <form action="#" method="post">
+        <label for="job">Job</label>
         <textarea cols="20" rows="40" name="job">hexlet</textarea>
       </form>
     RESULT
@@ -63,9 +65,11 @@ class HexletCodeTest < Minitest::Test
                  HexletCode.form_for(@user) { |f| f.input :job, as: :text }
   end
 
+  # rubocop:disable Metrics/MethodLength
   def test_form_for_generates_form_with_select_input
     expected_result = <<-RESULT
       <form action="#" method="post">
+        <label for="gender">Gender</label>
         <select name="gender">
           <option value="m" selected>m</option>
           <option value="f">f</option>
@@ -74,5 +78,30 @@ class HexletCodeTest < Minitest::Test
     RESULT
     assert_equal shorten(expected_result),
                  HexletCode.form_for(@user) { |f| f.input :gender, as: :select, collection: %w[m f] }
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  def test_form_for_generates_submit_with_default_value
+    expected_result = <<-RESULT
+      <form action="#" method="post">
+        <label for="name">Name</label>
+        <input type="text" value="rob" name="name">
+        <input type="submit" value="Save" name="commit">
+      </form>
+    RESULT
+    assert_equal shorten(expected_result),
+                 HexletCode.form_for(@user) { |f| f.input :name; f.submit }
+  end
+
+  def test_form_for_generates_submit_with_different_value
+    expected_result = <<-RESULT
+      <form action="#" method="post">
+        <label for="name">Name</label>
+        <input type="text" value="rob" name="name">
+        <input type="submit" value="Do it" name="commit">
+      </form>
+    RESULT
+    assert_equal shorten(expected_result),
+                 HexletCode.form_for(@user) { |f| f.input :name; f.submit "Do it" }
   end
 end

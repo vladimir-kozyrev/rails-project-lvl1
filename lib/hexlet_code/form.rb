@@ -10,8 +10,6 @@ module HexletCode
 
   # form validation
   class Form
-    attr_reader :form
-
     def initialize(user, url)
       @user = user
       @url = url
@@ -19,6 +17,7 @@ module HexletCode
     end
 
     def input(field, **kwargs)
+      @form += "\n<label for=\"#{field}\">#{field.capitalize}</label>"
       case kwargs[:as]
       when nil
         generate_input(field)
@@ -27,6 +26,12 @@ module HexletCode
       when :select
         generate_select(field, kwargs[:collection])
       end
+    end
+
+    def submit(value = "Save")
+      raise "The argument should be a string" unless value.instance_of? String
+
+      @form += "\n<input type=\"submit\" value=\"#{value}\" name=\"commit\">"
     end
 
     def finalize_form

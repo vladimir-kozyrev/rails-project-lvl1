@@ -10,5 +10,8 @@ Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
 
+Style/Semicolon:
+  AllowAsExpressionSeparator: true
+
 Layout/LineLength:
   Max: 120
