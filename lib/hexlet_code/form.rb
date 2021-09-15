@@ -11,23 +11,37 @@ module HexletCode
     end
 
     def input(input_name, **kwargs)
-      @form += HexletCode::Label.new(input_name).generate
+      label = HexletCode::Inputs::StringInput.new(
+        'label',
+        text: input_name.to_s.capitalize,
+        for: input_name
+      ).to_s
+      @form += "\n#{label}"
       value = get_input_value(input_name)
 
       case kwargs[:as]
       when nil
-        @form += HexletCode::Input.new(input_name, type: 'text', **kwargs).generate(value)
+        tag = HexletCode::Inputs::StringInput.new(
+          'input',
+          type: 'text',
+          value: value,
+          name: input_name,
+          **kwargs
+        )
+        @form += "\n#{tag}"
       when :text
-        @form += HexletCode::TextArea.new(input_name, **kwargs).generate(value)
-      when :select
-        @form += HexletCode::Select.new(input_name, **kwargs).generate
+        tag = HexletCode::Inputs::TextArea.new(
+          value, cols: kwargs[:cols], rows: kwargs[:rows], name: input_name, class: kwargs[:class]
+        ).to_s
+        @form += "\n#{tag}"
       end
     end
 
     def submit(value = 'Save')
       raise 'The argument should be a string' unless value.instance_of? String
 
-      @form += HexletCode::Input.new('input', type: 'submit', value: value, name: 'commit').generate(value)
+      tag = HexletCode::Inputs::StringInput.new('input', type: 'submit', value: value, name: 'commit')
+      @form += "\n#{tag}"
     end
 
     def finalize_form
@@ -38,7 +52,11 @@ module HexletCode
 
     def form_beginning
       action = @url.nil? ? '#' : @url
-      HexletCode::FormTag.new(nil).generate(action)
+      HexletCode::Inputs::StringInput.new(
+        'form',
+        action: action,
+        method: 'post'
+      ).to_s
     end
 
     def get_input_value(input_name)

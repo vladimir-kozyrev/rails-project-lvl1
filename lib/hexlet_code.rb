@@ -2,8 +2,10 @@
 
 require_relative 'hexlet_code/version'
 require_relative 'hexlet_code/tag'
+require_relative 'hexlet_code/inputs/base'
+require_relative 'hexlet_code/inputs/string_input'
+require_relative 'hexlet_code/inputs/text_area'
 require_relative 'hexlet_code/form'
-require_relative 'hexlet_code/input'
 
 # HW #1
 module HexletCode
