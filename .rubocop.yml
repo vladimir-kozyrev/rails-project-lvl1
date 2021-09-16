@@ -14,7 +14,7 @@ Style/Semicolon:
   AllowAsExpressionSeparator: true
 
 Metrics/MethodLength:
-  Max: 12
+  Max: 15
 
 Layout/LineLength:
   Max: 120
