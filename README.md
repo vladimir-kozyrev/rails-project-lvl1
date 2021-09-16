@@ -27,15 +27,15 @@ user = User.new job: 'hexlet'
 
 HexletCode.form_for user do |f|
   f.input :name
-  f.input :job
+  f.input :job, as: :text, rows: 40, cols: 30
   f.submit
 end
 
 # <form action="#" method="post">
 #   <label for="name">Name</label>
 #   <input type="text" name="name">
-#   <label for="job">Job</label>
-#   <input type="text" name="job" value="hexlet">
+#   <label for='job'>Job</label>
+#   <textarea cols='30' rows='40' name='job'>hexlet</textarea>
 #   <input type="submit" value="Save" name="commit">
 # </form>
 ```

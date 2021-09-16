@@ -26,7 +26,7 @@ module HexletCode
     def label_for_input(input_name)
       label = HexletCode::Inputs::StringInput.new(
         'label',
-        text: input_name.to_s.capitalize,
+        input_name.to_s.capitalize,
         for: input_name
       )
       "\n#{label}"
