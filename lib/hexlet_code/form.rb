@@ -35,22 +35,6 @@ module HexletCode
       renderer.render
     end
 
-    # def input(input_name, **kwargs)
-    #   label = HexletCode::Inputs::StringInput.new(
-    #     'label',
-    #     text: input_name.to_s.capitalize,
-    #     for: input_name
-    #   ).to_s
-    #   @form += "\n#{label}"
-    #   value = get_input_value(input_name)
-    # end
-    # def submit(value = 'Save')
-    #   raise 'The argument should be a string' unless value.instance_of? String
-
-    #   tag = HexletCode::Inputs::StringInput.new('input', type: 'submit', value: value, name: 'commit')
-    #   @form += "\n#{tag}"
-    # end
-
     private
 
     def get_input_value(input_name)
