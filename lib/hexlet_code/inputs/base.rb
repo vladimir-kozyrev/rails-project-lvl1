@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module HexletCode
   module Inputs
-  # A parent of all inputs here
+    # A parent of all inputs here
     class Base
       def to_s
         if @text.nil?
