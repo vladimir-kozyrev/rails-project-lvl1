@@ -3,19 +3,13 @@
 require 'test_helper'
 
 class HexletCodeTest < Minitest::Test
-  def test_form_renderer
-    form = [
-      { as: :text, input_name: 'job', input_value: 'hexlet', cols: 30, rows: 40 },
-      { input_name: 'input', input_value: 'Save', type: 'submit', name: 'commit' }
-    ]
-    renderer = HexletCode::FormRenderer.new(form, nil)
+  def test_input_renderer
+    input = { as: :text, name: 'job', value: 'hexlet', cols: 30, rows: 40 }
+    rendered_input = HexletCode::InputRenderer.new(input, add_newline_for_label: false).render
     expected_result = <<-RESULT
-    <form action='#' method='post'>
       <label for='job'>Job</label>
-      <textarea cols='30' rows='40' name='job'>hexlet</textarea>
-      <input type='submit' value='Save' name='commit'>
-    </form>
+      <textarea name='job' cols='30' rows='40'>hexlet</textarea>
     RESULT
-    assert_equal shorten(expected_result), renderer.render
+    assert_equal shorten(expected_result), rendered_input
   end
 end

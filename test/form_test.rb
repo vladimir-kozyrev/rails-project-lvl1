@@ -32,7 +32,7 @@ class HexletCodeTest < Minitest::Test
     expected_result = <<-RESULT
       <form action='#' method='post'>
         <label for='name'>Name</label>
-        <input type='text' value='rob' name='name' class='woo'>
+        <input name='name' value='rob' type='text' class='woo'>
       </form>
     RESULT
     assert_equal shorten(expected_result),
@@ -43,7 +43,7 @@ class HexletCodeTest < Minitest::Test
     expected_result = <<-RESULT
       <form action='#' method='post'>
         <label for='dog'>Dog</label>
-        <input type='text' name='dog'>
+        <input name='dog' type='text'>
       </form>
     RESULT
     assert_equal shorten(expected_result),
@@ -54,7 +54,7 @@ class HexletCodeTest < Minitest::Test
     expected_result = <<-RESULT
       <form action='#' method='post'>
         <label for='job'>Job</label>
-        <textarea cols='30' rows='40' name='job'>hexlet</textarea>
+        <textarea name='job' rows='40' cols='30'>hexlet</textarea>
       </form>
     RESULT
     assert_equal shorten(expected_result),
@@ -65,8 +65,8 @@ class HexletCodeTest < Minitest::Test
     expected_result = <<-RESULT
       <form action='#' method='post'>
         <label for='name'>Name</label>
-        <input type='text' value='rob' name='name'>
-        <input type='submit' value='Save' name='commit'>
+        <input name='name' value='rob' type='text'>
+        <input value='Save' type='submit' name='commit'>
       </form>
     RESULT
     actual_result = HexletCode.form_for(@user) do |f|
@@ -80,8 +80,8 @@ class HexletCodeTest < Minitest::Test
     expected_result = <<-RESULT
       <form action='#' method='post'>
         <label for='name'>Name</label>
-        <input type='text' value='rob' name='name'>
-        <input type='submit' value='Do it' name='commit'>
+        <input name='name' value='rob' type='text'>
+        <input value='Do it' type='submit' name='commit'>
       </form>
     RESULT
     actual_result = HexletCode.form_for(@user) do |f|
