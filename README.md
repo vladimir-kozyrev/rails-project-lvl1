@@ -28,15 +28,21 @@ user = User.new job: 'hexlet'
 HexletCode.form_for user do |f|
   f.input :name
   f.input :job, as: :text, rows: 40, cols: 30
+  f.input :gender, as: :select, collection: %w[m f]
   f.submit
 end
 
 # <form action="#" method="post">
 #   <label for="name">Name</label>
 #   <input type="text" name="name">
-#   <label for='job'>Job</label>
-#   <textarea cols='30' rows='40' name='job'>hexlet</textarea>
+#   <label for="job">Job</label>
+#   <textarea cols="30" rows="40" name="job">hexlet</textarea>
 #   <input type="submit" value="Save" name="commit">
+#   <label for="gender">Gender</label>
+#   <select name="gender">
+#     <option value="m">m</option>
+#     <option value="f">f</option>
+#   </select>
 # </form>
 ```
 

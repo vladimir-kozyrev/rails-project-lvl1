@@ -61,6 +61,20 @@ class HexletCodeTest < Minitest::Test
                  HexletCode.form_for(@user) { |f| f.input :job, as: :text, rows: 40, cols: 30 }
   end
 
+  def test_form_for_generates_form_with_select_input
+    expected_result = <<-RESULT
+      <form action='#' method='post'>
+        <label for='gender'>Gender</label>
+        <select name='gender'>
+          <option value='m'>m</option>
+          <option value='f'>f</option>
+        </select>
+      </form>
+    RESULT
+    assert_equal shorten(expected_result),
+                 HexletCode.form_for(@user) { |f| f.input :gender, as: :select, collection: %w[m f] }
+  end
+
   def test_form_for_generates_submit_with_default_value
     expected_result = <<-RESULT
       <form action='#' method='post'>

@@ -5,8 +5,7 @@ module HexletCode
     # Creates a <textarea> tag
     class TextArea < HexletCode::Inputs::Base
       def initialize(text, **kwargs)
-        @tag_name = 'textarea'
-        super(@tag_name, text, **kwargs)
+        super('textarea', text, **kwargs)
       end
     end
   end
