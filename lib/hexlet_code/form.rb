@@ -39,7 +39,7 @@ module HexletCode
     end
 
     def finalize_form
-      @form += "\n</form>"
+      @form += "\n</form>\n"
     end
 
     private

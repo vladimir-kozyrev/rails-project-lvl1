@@ -8,100 +8,25 @@ class HexletCodeTest < Minitest::Test
     @user = user_class.new name: 'rob', job: 'hexlet', gender: 'm'
   end
 
-  def shorten(text)
-    text.split("\n").map(&:strip).join("\n")
-  end
-
-  def test_form_for_without_url
-    expected_result = <<-RESULT
-      <form action='#' method='post'>
-      </form>
-    RESULT
-    assert_equal shorten(expected_result), HexletCode.form_for(@user)
-  end
-
-  def test_form_for_with_url
-    expected_result = <<-RESULT
-      <form action='/users' method='post'>
-      </form>
-    RESULT
-    assert_equal shorten(expected_result), HexletCode.form_for(@user, url: '/users')
-  end
-
-  def test_form_for_generates_form_with_input
-    expected_result = <<-RESULT
-      <form action='#' method='post'>
-        <label for='name'>Name</label>
-        <input name='name' value='rob' type='text' class='woo'>
-      </form>
-    RESULT
-    assert_equal shorten(expected_result),
-                 HexletCode.form_for(@user) { |f| f.input :name, class: 'woo' }
-  end
-
-  def test_form_for_raises_if_input_is_not_set
-    expected_result = <<-RESULT
-      <form action='#' method='post'>
-        <label for='dog'>Dog</label>
-        <input name='dog' type='text'>
-      </form>
-    RESULT
-    assert_equal shorten(expected_result),
-                 HexletCode.form_for(@user) { |f| f.input :dog }
-  end
-
-  def test_form_for_generates_form_with_text_input
-    expected_result = <<-RESULT
-      <form action='#' method='post'>
-        <label for='job'>Job</label>
-        <textarea name='job' rows='40' cols='30'>hexlet</textarea>
-      </form>
-    RESULT
-    assert_equal shorten(expected_result),
-                 HexletCode.form_for(@user) { |f| f.input :job, as: :text, rows: 40, cols: 30 }
-  end
-
-  def test_form_for_generates_form_with_select_input
-    expected_result = <<-RESULT
-      <form action='#' method='post'>
-        <label for='gender'>Gender</label>
-        <select name='gender'>
-          <option value='m'>m</option>
-          <option value='f'>f</option>
-        </select>
-      </form>
-    RESULT
-    assert_equal shorten(expected_result),
-                 HexletCode.form_for(@user) { |f| f.input :gender, as: :select, collection: %w[m f] }
-  end
-
-  def test_form_for_generates_submit_with_default_value
-    expected_result = <<-RESULT
-      <form action='#' method='post'>
-        <label for='name'>Name</label>
-        <input name='name' value='rob' type='text'>
-        <input value='Save' type='submit' name='commit'>
-      </form>
-    RESULT
+  def test_form_for_with_default_values
+    expected_result = File.open("#{__dir__}/fixtures/form_for_default.html")
     actual_result = HexletCode.form_for(@user) do |f|
       f.input :name
+      f.input :job, as: :text, rows: 40, cols: 30
+      f.input :gender, as: :select, collection: %w[m f]
       f.submit
     end
-    assert_equal shorten(expected_result), actual_result
+    assert_equal expected_result.read, actual_result
   end
 
-  def test_form_for_generates_submit_with_different_value
-    expected_result = <<-RESULT
-      <form action='#' method='post'>
-        <label for='name'>Name</label>
-        <input name='name' value='rob' type='text'>
-        <input value='Do it' type='submit' name='commit'>
-      </form>
-    RESULT
-    actual_result = HexletCode.form_for(@user) do |f|
+  def test_form_for_with_custom_url_and_submit
+    expected_result = File.open("#{__dir__}/fixtures/form_for_custom.html")
+    actual_result = HexletCode.form_for(@user, url: '/test') do |f|
       f.input :name
+      f.input :job, as: :text, rows: 40, cols: 30
+      f.input :gender, as: :select, collection: %w[m f]
       f.submit 'Do it'
     end
-    assert_equal shorten(expected_result), actual_result
+    assert_equal expected_result.read, actual_result
   end
 end
