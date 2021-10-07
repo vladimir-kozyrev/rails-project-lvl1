@@ -5,6 +5,9 @@ module HexletCode
     # Creates <select> inputs
     class Select < Base
       def initialize(options, **kwargs)
+        raise 'You must specify a collection for "select" input' if options.nil? ||
+                                                                    !options.instance_of?(Array)
+
         @options = options
         @kwargs = kwargs
         super('select', generate_options, **kwargs)

@@ -29,48 +29,15 @@ module HexletCode
     end
 
     def input_to_html(input)
-      case input[:as]
-      when nil
-        string_input(input[:tag_name], **input)
-      when :text
-        textarea_input(input[:value], **input)
-      when :select
-        select_input(input[:collection], **input)
-      end
-    end
-
-    def string_input(tag_name, **kwargs)
-      allowed_kwargs = %i[type value name class action method]
-      input = HexletCode::Inputs::StringInput.new(
-        tag_name,
-        **input_kwargs(kwargs, allowed_kwargs)
-      )
-      @add_newline_for_input ? "\n#{input}" : input.to_s
-    end
-
-    def textarea_input(value, **kwargs)
-      allowed_kwargs = %i[cols rows name class]
-      input = HexletCode::Inputs::TextArea.new(
-        value,
-        **input_kwargs(kwargs, allowed_kwargs)
-      )
-      @add_newline_for_input ? "\n#{input}" : input.to_s
-    end
-
-    def select_input(options, **kwargs)
-      raise 'You must specify a collection for "select" input' if options.nil? ||
-                                                                  !options.instance_of?(Array)
-
-      allowed_kwargs = %i[name class]
-      input = HexletCode::Inputs::Select.new(
-        options,
-        **input_kwargs(kwargs, allowed_kwargs)
-      )
-      @add_newline_for_input ? "\n#{input}" : input.to_s
-    end
-
-    def input_kwargs(kwargs, allowed_kwargs)
-      kwargs.filter { |arg| allowed_kwargs.include? arg }
+      result = case input[:as]
+               when nil
+                 HexletCode::Inputs::StringInput.new(input[:tag_name], **input).to_s
+               when :text
+                 HexletCode::Inputs::TextArea.new(input[:value], **input)
+               when :select
+                 HexletCode::Inputs::Select.new(input[:collection], **input)
+               end
+      @add_newline_for_input ? "\n#{result}" : result.to_s
     end
   end
 end

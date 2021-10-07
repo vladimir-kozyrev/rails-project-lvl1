@@ -1,12 +1,12 @@
-<form action='#' method='post'>
+<form tag_name='form' action='#' method='post'>
 <label for='name'>Name</label>
-<input name='name' value='rob' type='text'>
+<input tag_name='input' name='name' value='rob' type='text'>
 <label for='job'>Job</label>
-<textarea name='job' rows='40' cols='30'>hexlet</textarea>
+<textarea tag_name='input' name='job' value='hexlet' type='text' as='text' rows='40' cols='30'>hexlet</textarea>
 <label for='gender'>Gender</label>
-<select name='gender'>
+<select tag_name='input' name='gender' value='m' type='text' as='select' collection='["m", "f"]'>
 <option value='m'>m</option>
 <option value='f'>f</option>
 </select>
-<input value='Save' type='submit' name='commit'>
+<input tag_name='input' value='Save' type='submit' name='commit'>
 </form>
