@@ -4,42 +4,34 @@
 module HexletCode
   # form validation
   class Form
+    attr_reader :inputs
+
     def initialize(user, url)
       @user = user
-      @form = HexletCode::InputRenderer.new(
-        {
-          tag_name: 'form',
-          action: url.nil? ? '#' : url,
-          method: 'post'
-        },
-        add_newline_for_input: false
-      ).render
+      @inputs = []
+      @inputs << {
+        tag_name: 'form',
+        action: url.nil? ? '#' : url,
+        method: 'post'
+      }
     end
 
     def input(input_name, **kwargs)
-      @form += HexletCode::InputRenderer.new(
-        {
-          tag_name: 'input',
-          name: input_name,
-          value: get_input_value(input_name),
-          type: 'text',
-          **kwargs
-        }
-      ).render
+      @inputs << {
+        tag_name: 'input',
+        name: input_name,
+        value: get_input_value(input_name),
+        type: 'text',
+        **kwargs
+      }
     end
 
     def submit(value = 'Save')
       raise 'The argument should be a string' unless value.instance_of? String
 
-      @form += HexletCode::InputRenderer.new(
-        {
-          tag_name: 'input', value: value, type: 'submit', name: 'commit'
-        }
-      ).render
-    end
-
-    def finalize_form
-      @form += "\n</form>\n"
+      @inputs << {
+        tag_name: 'input', value: value, type: 'submit', name: 'commit'
+      }
     end
 
     private
