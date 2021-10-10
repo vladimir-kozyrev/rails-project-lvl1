@@ -42,11 +42,11 @@ module HexletCode
       def input_to_html(input)
         result = case input[:as]
                  when nil
-                   HexletCode::Inputs::StringInput.new(input[:tag_name], **input).to_s
+                   Inputs::StringInput.new(input[:tag_name], **input).to_s
                  when :text
-                   HexletCode::Inputs::TextArea.new(input[:value], **input)
+                   Inputs::TextArea.new(input[:value], **input)
                  when :select
-                   HexletCode::Inputs::Select.new(input[:collection], **input)
+                   Inputs::Select.new(input[:collection], **input)
                  end
         "#{result}\n"
       end
