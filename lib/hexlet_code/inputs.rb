@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HexletCode
   module Inputs
     autoload :Base, 'hexlet_code/inputs/base.rb'
