@@ -4,16 +4,12 @@
 module HexletCode
   # form validation
   class Form
-    attr_reader :inputs
+    attr_reader :inputs, :url
 
     def initialize(user, url)
       @user = user
+      @url = url
       @inputs = []
-      @inputs << {
-        tag_name: 'form',
-        action: url.nil? ? '#' : url,
-        method: 'post'
-      }
     end
 
     def input(input_name, **kwargs)

@@ -5,14 +5,20 @@ module HexletCode
   class FormRenderer
     def initialize(form)
       @form = form
-      @result = ''
     end
 
     def render
-      @form.inputs.each do |input|
-        @result += InputRenderer.new(input).render
+      rendered_inputs = @form.inputs.map do |input|
+        InputRenderer.new(input).render
       end
-      "#{@result}</form>\n"
+
+      rendered_form = Tag.build(
+        'form',
+        action: @form.url.nil? ? '#' : @form.url,
+        method: 'post'
+      ) { "\n#{rendered_inputs.join}" }
+
+      "#{rendered_form}\n"
     end
   end
 end
