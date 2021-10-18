@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HexletCode
-# Renders an input
+  # Renders an input
   class InputRenderer
     def initialize(input)
       @input = input
@@ -27,13 +27,13 @@ module HexletCode
 
     def input_to_html(input)
       result = case input[:as]
-              when nil
-                Inputs::StringInput.new(input[:tag_name], **input)
-              when :text
-                Inputs::TextArea.new(input[:value], **input)
-              when :select
-                Inputs::Select.new(input[:collection], **input)
-              end
+               when nil
+                 Inputs::StringInput.new(input[:tag_name], **input)
+               when :text
+                 Inputs::TextArea.new(input[:value], **input)
+               when :select
+                 Inputs::Select.new(input[:collection], **input)
+               end
       "#{result}\n"
     end
   end
