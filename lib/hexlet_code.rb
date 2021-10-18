@@ -4,6 +4,7 @@
 module HexletCode
   autoload :VERSION, 'hexlet_code/version.rb'
   autoload :Tag, 'hexlet_code/tag.rb'
+  autoload :InputRenderer, 'hexlet_code/input_renderer.rb'
   autoload :FormRenderer, 'hexlet_code/form_renderer.rb'
   autoload :Form, 'hexlet_code/form.rb'
   autoload :Inputs, 'hexlet_code/inputs.rb'
