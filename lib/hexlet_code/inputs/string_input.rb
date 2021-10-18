@@ -4,8 +4,8 @@ module HexletCode
   module Inputs
     # Creates string inputs
     class StringInput < Base
-      def initialize(tag_name, text = nil, **kwargs)
-        super
+      def initialize(text = nil, **kwargs)
+        super(kwargs[:tag_name], text, **kwargs)
       end
     end
   end

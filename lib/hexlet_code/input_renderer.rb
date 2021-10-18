@@ -22,15 +22,9 @@ module HexletCode
     end
 
     def input_to_html(input)
-      result = case input[:as]
-               when nil
-                 Inputs::StringInput.new(input[:tag_name], **input)
-               when :text
-                 Inputs::TextArea.new(input[:value], **input)
-               when :select
-                 Inputs::Select.new(input[:collection], **input)
-               end
-      "#{result}\n"
+      type = input[:as].nil? ? 'String' : input[:as].to_s.capitalize
+      input = Object.const_get("HexletCode::Inputs::#{type}Input").new(**input)
+      "#{input}\n"
     end
   end
 end
