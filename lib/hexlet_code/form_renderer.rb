@@ -11,13 +11,17 @@ module HexletCode
       rendered_inputs = @form.inputs.map do |input|
         InputRenderer.new(input).render
       end
+      form_tag_with_inputs(rendered_inputs.join)
+    end
 
+    private
+
+    def form_tag_with_inputs(inputs)
       rendered_form = Tag.build(
         'form',
         action: @form.url.nil? ? '#' : @form.url,
         method: 'post'
-      ) { "\n#{rendered_inputs.join}" }
-
+      ) { "\n#{inputs}" }
       "#{rendered_form}\n"
     end
   end
