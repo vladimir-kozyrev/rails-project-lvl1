@@ -10,6 +10,8 @@ module HexletCode
   autoload :Inputs, 'hexlet_code/inputs.rb'
 
   def self.form_for(user, url: nil)
+    raise 'You must pass a block to the form_for method' unless block_given?
+
     form = Form.new(user, url)
     yield form if block_given?
     FormRenderer.new(form).render
