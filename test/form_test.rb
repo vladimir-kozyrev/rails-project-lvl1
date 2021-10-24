@@ -29,4 +29,8 @@ class HexletCodeTest < Minitest::Test
     end
     assert_equal expected_result.read, actual_result
   end
+
+  def test_form_for_raises_unless_block_given
+    assert_raises(RuntimeError) { HexletCode.form_for(@user) }
+  end
 end
