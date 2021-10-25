@@ -9,6 +9,7 @@ module HexletCode
   autoload :FormRenderer, 'hexlet_code/form_renderer.rb'
   autoload :Form, 'hexlet_code/form.rb'
   autoload :Inputs, 'hexlet_code/inputs.rb'
+  autoload :Exceptions, 'hexlet_code/exceptions.rb'
 
   def self.format
     @format ||= 'html'
