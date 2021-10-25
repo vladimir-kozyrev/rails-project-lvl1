@@ -6,8 +6,12 @@ module HexletCode
     def self.build(tag_name, **kwargs, &block)
       raise 'You must provide a tag name' if tag_name.nil?
 
-      format = HexletCode.format.capitalize
-      tag_format = Object.const_get("HexletCode::TagFormats::#{format}")
+      begin
+        format = HexletCode.format.capitalize
+        tag_format = Object.const_get("HexletCode::TagFormats::#{format}")
+      rescue
+        raise HexletCode::Exceptions::UnknownTagFormat, 'This format is not supported'
+      end
       tag_format.build(tag_name, **kwargs, &block)
     end
   end
