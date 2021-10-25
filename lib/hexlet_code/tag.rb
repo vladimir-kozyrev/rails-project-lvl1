@@ -9,7 +9,7 @@ module HexletCode
       begin
         format = HexletCode.format.capitalize
         tag_format = Object.const_get("HexletCode::TagFormats::#{format}")
-      rescue
+      rescue NameError
         raise HexletCode::Exceptions::UnknownTagFormat, 'This format is not supported'
       end
       tag_format.build(tag_name, **kwargs, &block)
