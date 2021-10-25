@@ -33,7 +33,7 @@ module HexletCode
     private
 
     def get_input_value(input_name)
-      @user.methods.include?(input_name) ? @user.send(input_name) : ''
+      @user.send(input_name)
     end
   end
 end

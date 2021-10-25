@@ -41,4 +41,13 @@ class HexletCodeTest < Minitest::Test
       end
     end
   end
+
+  def test_form_for_raises_with_unknown_user_method
+    assert_raises(NoMethodError) do
+      HexletCode.form_for(@user) do |f|
+        f.input :company
+        f.submit 'Boom!'
+      end
+    end
+  end
 end
