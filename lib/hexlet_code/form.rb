@@ -14,7 +14,6 @@ module HexletCode
 
     def input(input_name, **kwargs)
       @inputs << {
-        tag_name: 'input',
         name: input_name,
         value: get_input_value(input_name),
         type: 'text',
@@ -26,7 +25,7 @@ module HexletCode
       raise 'The argument should be a string' unless value.instance_of? String
 
       @inputs << {
-        tag_name: 'input', value: value, type: 'submit', name: 'commit'
+        value: value, type: 'submit', name: 'commit'
       }
     end
 
