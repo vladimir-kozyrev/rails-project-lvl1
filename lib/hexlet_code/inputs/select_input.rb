@@ -17,9 +17,9 @@ module HexletCode
 
       def generate_options
         select_options = @options.map do |option|
-          option_tag = HexletCode::Inputs::StringInput.new(
-            option, tag_name: 'option', value: option, class: @kwargs[:class]
-          )
+          option_tag = HexletCode::Tag.build(
+            'option', value: option, class: @kwargs[:class]
+          ) { option }
           "\n#{option_tag}"
         end
         "#{select_options.join}\n"
