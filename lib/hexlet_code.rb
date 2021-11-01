@@ -24,7 +24,7 @@ module HexletCode
 
     self.format = format
     form = Form.new(user, url)
-    yield form if block_given?
+    yield form
     FormRenderer.new(form).render
   end
 end
