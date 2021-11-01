@@ -12,12 +12,12 @@ module HexletCode
       @inputs = []
     end
 
-    def input(input_name, **kwargs)
+    def input(input_name, **attributes)
       @inputs << {
         name: input_name,
         value: get_input_value(input_name),
         type: 'text',
-        **kwargs
+        **attributes
       }
     end
 

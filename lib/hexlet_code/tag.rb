@@ -3,7 +3,7 @@
 module HexletCode
   # A module that generates HTML tags
   module Tag
-    def self.build(tag_name, **kwargs, &block)
+    def self.build(tag_name, **attributes, &block)
       raise 'You must provide a tag name' if tag_name.nil?
 
       begin
@@ -12,7 +12,7 @@ module HexletCode
       rescue NameError
         raise HexletCode::Exceptions::UnknownTagFormat, 'This format is not supported'
       end
-      tag_format.build(tag_name, **kwargs, &block)
+      tag_format.build(tag_name, **attributes, &block)
     end
   end
 end
