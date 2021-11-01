@@ -5,16 +5,14 @@ module HexletCode
     # a module that builds tags in HTML format
     module Html
       def self.build(tag_name, **attributes, &block)
-        result = attributes.inject("<#{tag_name}") do |memo, (k, v)|
-          if v.nil? || (v.instance_of?(String) && v.empty?)
-            memo
-          else
-            memo + " #{k}='#{v}'"
-          end
+        result = ["<#{tag_name}"]
+        attributes.each do |key, value|
+          result.append(" #{key}='#{value}'") unless value.nil? ||
+                                                     (value.instance_of?(String) && value.empty?)
         end
-        result += '>'
-        result += block.call + "</#{tag_name}>" if block_given?
-        result
+        result.append('>')
+        result.append("#{block.call}</#{tag_name}>") if block_given?
+        result.join
       end
     end
   end
