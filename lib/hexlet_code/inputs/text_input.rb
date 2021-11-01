@@ -4,8 +4,8 @@ module HexletCode
   module Inputs
     # Creates a <textarea> tag
     class TextInput < HexletCode::Inputs::Base
-      def initialize(**kwargs)
-        super('textarea', kwargs[:value], **kwargs)
+      def initialize(**attributes)
+        super('textarea', attributes[:value], **attributes)
       end
     end
   end
