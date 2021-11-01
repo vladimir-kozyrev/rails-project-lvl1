@@ -4,7 +4,7 @@
 module HexletCode
   # form validation
   class Form
-    attr_reader :inputs, :url
+    attr_reader :inputs, :url, :submit_attributes
 
     def initialize(user, url)
       @user = user
@@ -24,7 +24,7 @@ module HexletCode
     def submit(value = 'Save')
       raise 'The argument should be a string' unless value.instance_of? String
 
-      @inputs << {
+      @submit_attributes = {
         value: value, type: 'submit', name: 'commit'
       }
     end

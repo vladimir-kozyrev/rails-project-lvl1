@@ -8,9 +8,9 @@ module HexletCode
     end
 
     def render
-      result = ''
-      result += label_for_input(@input[:name]) unless @input[:type] == 'submit'
-      result + input_to_html(@input)
+      result = []
+      result << label_for_input(@input[:name])
+      result << input_to_html(@input)
     end
 
     private
